@@ -1,6 +1,8 @@
 package com.megateam.lab.server.db;
 
-import com.megateam.lab.common.data.MarshUnmarshContainer;
+import com.megateam.lab.common.data.Ticket;
+import com.megateam.lab.common.data.TicketContainer;
+import com.megateam.lab.common.data.TicketMarshUnmarshContainer;
 import com.megateam.lab.common.data.util.LocalDateTimeAdapter;
 import com.megateam.lab.common.exceptions.DatabaseException;
 import com.megateam.lab.common.exceptions.EnvException;
@@ -20,14 +22,15 @@ import java.util.List;
 import java.util.Optional;
 
 @AllArgsConstructor
-public class MarshallingUnmarshallingService<T>
+public class MarshallingUnmarshallingService
 {
 	@NonNull
 	private FileManipulationService fileManipulationService;
 	@NonNull
 	private FileValidationService validationService;
 
-	public void marshal(@NonNull LocalDateTime dateTime, @NonNull List<T> collectionElements) throws DatabaseException, EnvException
+	@SuppressWarnings("unchecked")
+	public void marshal(@NonNull LocalDateTime dateTime, @NonNull List<?> collectionElements) throws DatabaseException, EnvException
 	{
 		File file = fileManipulationService.retrieveSavingFile();
 		validationService.validateSavingFileExistence(file);
@@ -35,12 +38,12 @@ public class MarshallingUnmarshallingService<T>
 
 		try (FileOutputStream fos = new FileOutputStream(file))
 		{
-			JAXBContext context = JAXBContext.newInstance(MarshUnmarshContainer.class);
+			JAXBContext context = JAXBContext.newInstance(TicketContainer.class);
 			Marshaller marshaller = context.createMarshaller();
 			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
 			marshaller.setAdapter(new LocalDateTimeAdapter());
 
-			MarshUnmarshContainer<T> container = new MarshUnmarshContainer<>(dateTime, collectionElements);
+			TicketContainer container = new TicketContainer(dateTime, (List<Ticket>) collectionElements);
 			marshaller.marshal(container, fos);
 		}
 		catch (IOException e)
@@ -58,7 +61,7 @@ public class MarshallingUnmarshallingService<T>
 	}
 
 	@SuppressWarnings("unchecked")
-	public Optional<MarshUnmarshContainer<T>> unmarshal() throws DatabaseException, EnvException
+	public Optional<TicketContainer> unmarshal() throws DatabaseException, EnvException
 	{
 		File file = fileManipulationService.retrieveSavingFile();
 		validationService.validateSavingFileExistence(file);
@@ -66,10 +69,10 @@ public class MarshallingUnmarshallingService<T>
 
 		try
 		{
-			JAXBContext context = JAXBContext.newInstance(MarshUnmarshContainer.class);
+			JAXBContext context = JAXBContext.newInstance(TicketContainer.class);
 			Unmarshaller unmarshaller = context.createUnmarshaller();
 			unmarshaller.setAdapter(new LocalDateTimeAdapter());
-			MarshUnmarshContainer<T> container = (MarshUnmarshContainer<T>) unmarshaller.unmarshal(file);
+			TicketContainer container = (TicketContainer) unmarshaller.unmarshal(file);
 			return Optional.ofNullable(container);
 		}
 		catch (JAXBException e)

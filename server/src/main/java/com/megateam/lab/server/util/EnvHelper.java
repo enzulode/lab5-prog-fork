@@ -11,11 +11,15 @@ public class EnvHelper
 	{
 		try
 		{
-			return System.getenv("SAVING_FILE");
-		}
-		catch (NullPointerException e)
-		{
-			throw new VariableNotDefinedException("Collection saving file path variable is not set.");
+			String variable = System.getenv("SAVING_FILE");
+
+			if (variable == null)
+				throw new VariableNotDefinedException("Collection saving file path variable not exists.");
+
+			if ("".equals(variable))
+				throw new VariableNotDefinedException("Collection saving file path variable exists, but is empty");
+
+			return variable;
 		}
 		catch (SecurityException e)
 		{
