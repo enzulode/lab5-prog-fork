@@ -10,3 +10,6 @@ build
 
 # Ignore MacOS files
 .DS_Store
+
+# Ignore Drawio temporary files
+docs/.$*
