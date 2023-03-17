@@ -42,7 +42,7 @@ public class DataClassesValidator
 	public void validateVenueCapacity(Integer capacity) throws ValidationException
 	{
 		if (capacity == null) throw new FieldCannotBeNullException("Venue capacity cannot be null.");
-		if (capacity < 0) throw new OutOfAllowedBoundException("Venue capacity should be greater than zero.");
+		if (capacity <= 0) throw new OutOfAllowedBoundException("Venue capacity should be greater than zero.");
 	}
 
 	public void validateVenue(Venue venue) throws ValidationException
