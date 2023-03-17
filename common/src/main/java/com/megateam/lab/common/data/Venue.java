@@ -13,7 +13,6 @@ import javax.xml.bind.annotation.*;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Venue
 {
-	@NonNull
 	@XmlAttribute(name = "venueId", required = true)
 	private long id;
 	@NonNull
