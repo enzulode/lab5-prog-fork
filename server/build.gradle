@@ -9,7 +9,7 @@ dependencies {
 
 jar {
 	manifest {
-		attributes 'Main-Class': 'com.megateam.lab.server.TestServer'
+		attributes 'Main-Class': 'com.megateam.lab.server.Server'
 	}
 
 	duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
