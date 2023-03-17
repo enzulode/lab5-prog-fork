@@ -1,6 +1,6 @@
 package com.megateam.lab.server.db;
 
-import com.megateam.lab.common.data.MarshUnmarshContainer;
+import com.megateam.lab.common.data.TicketContainer;
 import com.megateam.lab.common.data.Ticket;
 import com.megateam.lab.common.exceptions.DatabaseException;
 import com.megateam.lab.common.exceptions.EnvException;
@@ -24,9 +24,9 @@ public class TicketDatabase implements Database<Ticket>
 	@Getter
 	private LocalDateTime creationDate;
 	@NonNull
-	private MarshallingUnmarshallingService<Ticket> marshallingUnmarshallingService;
+	private TicketMarshallingUnmarshallingService marshallingUnmarshallingService;
 
-	public TicketDatabase(MarshallingUnmarshallingService<Ticket> marshallingUnmarshallingService)
+	public TicketDatabase(TicketMarshallingUnmarshallingService marshallingUnmarshallingService)
 	{
 		this.collectionElements = new ArrayList<>();
 		this.creationDate = LocalDateTime.now(ZoneId.systemDefault());
@@ -100,7 +100,7 @@ public class TicketDatabase implements Database<Ticket>
 
 	public void load() throws EnvException, DatabaseException
 	{
-		Optional<MarshUnmarshContainer<Ticket>> container = marshallingUnmarshallingService.unmarshal();
+		Optional<TicketContainer> container = marshallingUnmarshallingService.unmarshal();
 		if (container.isEmpty())
 		{
 			this.creationDate = LocalDateTime.now(ZoneId.systemDefault());
@@ -108,8 +108,8 @@ public class TicketDatabase implements Database<Ticket>
 			return;
 		}
 
-		MarshUnmarshContainer<Ticket> data = container.get();
-		this.creationDate = data.getLocalDateTime();
-		this.collectionElements = data.getData();
+		TicketContainer data = container.get();
+		this.creationDate = data.getCreationDate();
+		this.collectionElements = data.getTickets();
 	}
 }
