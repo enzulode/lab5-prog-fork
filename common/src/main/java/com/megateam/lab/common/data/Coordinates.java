@@ -16,7 +16,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Coordinates
 {
-	@NonNull
 	@XmlElement(name = "xCoord", required = true)
 	private float x;
 	@NonNull
