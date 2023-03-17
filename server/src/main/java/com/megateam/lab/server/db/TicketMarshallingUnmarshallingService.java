@@ -2,7 +2,6 @@ package com.megateam.lab.server.db;
 
 import com.megateam.lab.common.data.Ticket;
 import com.megateam.lab.common.data.TicketContainer;
-import com.megateam.lab.common.data.TicketMarshUnmarshContainer;
 import com.megateam.lab.common.data.util.LocalDateTimeAdapter;
 import com.megateam.lab.common.exceptions.DatabaseException;
 import com.megateam.lab.common.exceptions.EnvException;
@@ -22,7 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 @AllArgsConstructor
-public class MarshallingUnmarshallingService
+public class TicketMarshallingUnmarshallingService
 {
 	@NonNull
 	private FileManipulationService fileManipulationService;
