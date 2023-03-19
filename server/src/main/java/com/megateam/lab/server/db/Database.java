@@ -21,5 +21,5 @@ public interface Database<T>
 	void removeLast();
 	void save() throws EnvException, DatabaseException;
 	void load() throws EnvException, DatabaseException;
-
+	int size();
 }
