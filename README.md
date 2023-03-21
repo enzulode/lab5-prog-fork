@@ -1,3 +1,3 @@
 # LAB5 Impl
-### by `Vladislav Andreev` & `Anastasia Petrova`
+### by `Vladislav Andreev` & `Хлебушек`
 ### task id is `31191`
